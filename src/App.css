@@ -1,0 +1,64 @@
+#root {
+  padding: 2rem;
+  width: 100%;
+}
+
+.button-menu {
+  @apply w-[32px] h-[2px] my-[7px] block bg-white;
+}
+
+.button-menu {
+  width: 24px;
+  height: 3px;
+  background-color: white;
+  margin: 5px 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.origin-top-left {
+  transform-origin: top left;
+}
+
+.origin-bottom-left {
+  transform-origin: bottom left;
+}
+
+.transform {
+  transform: rotate(45deg);
+}
+
+.rotate-45 {
+  transform: rotate(45deg);
+}
+
+.-rotate-45 {
+  transform: rotate(-45deg);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background-color: white;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 10000;
+}
+
+.dropdown-item {
+  padding: 10px 15px;
+  cursor: pointer;
+  align-items: start;
+}
+
+.dropdown-item:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+.main-content {
+  transition: margin-left 0.4s ease-in-out;
+}
+
+.sidebar_efek {
+  transition: margin-left 8s ease-in-out;
+}
