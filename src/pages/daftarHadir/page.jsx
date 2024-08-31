@@ -5,7 +5,7 @@ const DaftarHadir = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch("")
+    fetch(`${import.meta.env.VITE_API_SISWA}/siswa`)
       .then((res) => {
         return res.json();
       })
@@ -57,7 +57,9 @@ const DaftarHadir = () => {
             />
           </div>
         </div>
-        <Table />
+          {data.map((siswa) => (
+            <Table data={siswa} />
+          ))}
       </div>
     </>
   );

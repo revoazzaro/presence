@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 const Table = ({ data }) => {
 
@@ -28,13 +28,13 @@ const Table = ({ data }) => {
           <tbody>
             {data.map((siswa) => (
               <tr className="border-black  hover:bg-neutral-100">
-                <th scope="row" className="px-6 py-3 border-x ">
-                  {siswa.nis}
-                </th>
-                <td className="px-6 py-3 border-x ">{siswa.nama}</td>
-                <td className="px-6 py-3 border-x ">{siswa.alamat}</td>
-                <td className="px-6 py-3 border-x ">{siswa.jk}</td>
-                <td className="px-6 py-3 border-x ">{siswa.kelas}</td>
+                <td scope="row" className="px-6 py-3 border-x ">
+                  {siswa}
+                </td>
+                <td className="px-6 py-3 border-x ">{siswa}</td>
+                <td className="px-6 py-3 border-x ">{siswa}</td>
+                <td className="px-6 py-3 border-x ">{siswa}</td>
+                <td className="px-6 py-3 border-x ">{siswa}</td>
               </tr>
             ))}
           </tbody>
