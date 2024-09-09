@@ -1,0 +1,1 @@
+export const WS = new WebSocket('wss://ws-absensi.navetacandraa.my.id/');

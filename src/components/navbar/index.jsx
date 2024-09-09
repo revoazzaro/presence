@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import Sidebar from "../sidebar/page";
+import Sidebar from "../sidebar";
 import { useNavigate } from "react-router-dom";
 
 const Navbar = ({ isMenuOpen, setIsMenuOpen }) => {
@@ -28,6 +28,18 @@ const Navbar = ({ isMenuOpen, setIsMenuOpen }) => {
       setIsdropdownOpen(false);
     }
   };
+
+  const logout = async () => {
+    const res = await fetch(`${import.meta.env.VITE_API_SISWA}/logout`, {
+      method: "GET",
+      credentials: "include",
+    });
+    if(res.ok) { 
+      localStorage.removeItem('authToken');
+      setIsdropdownOpen(false);
+      navigate('/login');
+    }
+  }
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -105,10 +117,7 @@ const Navbar = ({ isMenuOpen, setIsMenuOpen }) => {
                 </li>
                 <li
                   className="dropdown-item text-black"
-                  onClick={() => {
-                    navigate("/logout");
-                    setIsdropdownOpen(false);
-                  }}
+                  onClick={logout}
                 >
                   Log Out
                 </li>

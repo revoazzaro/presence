@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Table from "../../components/table/page";
+import Table from "../../components/table";
 
 const DaftarGuru = () => {
   const [data, setData] = useState([]);
@@ -57,7 +57,7 @@ const DaftarGuru = () => {
             />
           </div>
         </div>
-          {data.map((siswa) => (
+          {data?.map((siswa) => (
             <Table data={siswa} />
           ))}
       </div>

@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Logout = () => {
+const DaftarSiswa = () => {
   return (
     <div>
-      dfsssdfsfsgfg
+      
     </div>
   )
 }
 
-export default Logout
+export default DaftarSiswa

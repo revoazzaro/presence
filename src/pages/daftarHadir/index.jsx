@@ -1,18 +1,16 @@
-import React, { useEffect, useState } from "react";
-import Table from "../../components/table/page";
+import Table from "../../components/table";
+import useSWRImmutable from "swr/immutable";
+
+const fetcher = (...args) => fetch(...args).then(r => r.json());
 
 const DaftarHadir = () => {
-  const [data, setData] = useState([]);
+  const apiUrl = `${import.meta.env.VITE_API_SISWA}/kelas`;
 
-  useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_SISWA}/siswa`)
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setData(data);
-      });
-  });
+  const { data, error, isLoading } = useSWRImmutable(apiUrl, fetcher);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Failed to load: {error.message}</div>;
+  console.log(data);
 
   return (
     <>
@@ -57,9 +55,9 @@ const DaftarHadir = () => {
             />
           </div>
         </div>
-          {data.map((siswa) => (
-            <Table data={siswa} />
-          ))}
+        {data.map((d) => (
+          console.log(d)
+        ))}
       </div>
     </>
   );

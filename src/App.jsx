@@ -1,30 +1,93 @@
 import "./App.css";
-import Navbar from "./components/navbar/page";
-import DaftarHadir from "./pages/daftarHadir/page";
-import Dashboard from "./pages/dasboard/page";
+import Navbar from "./components/navbar";
+import DaftarHadir from "./pages/daftarHadir";
+import Dashboard from "./pages/dasboard";
 import { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Download from "./pages/download/page";
-import Profile from "./pages/profile/page";
-import Logout from "./pages/logout/page";
-import Jadwal from "./pages/jadwal/page";
-import DaftarGuru from "./pages/daftarGuru/page";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import Download from "./pages/download";
+import Profile from "./pages/profile";
+import Jadwal from "./pages/jadwal";
+import DaftarGuru from "./pages/daftarGuru";
+import Login from "./pages/login";
+import { WS } from "./ws";
+
+function Authenticated({ children }) {
+  const token = localStorage.getItem("authToken");
+  if (!token) return <Navigate to="/login" />;
+  return children;
+}
+
+function Unauthenticated({ children }) {
+  const token = localStorage.getItem("authToken");
+  if (token) return <Navigate to="/" />;
+  return children;
+}
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  WS.onmessage = m => {
+    console.log({m})
+  }
 
   return (
     <Router>
       <Navbar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
       <div className={`main-content ${isMenuOpen ? "ml-52" : ""}`}>
         <Routes>
-          <Route path="/" element={<Dashboard />} />
+          <Route
+            path="/"
+            element={
+              <Authenticated>
+                <Dashboard />
+              </Authenticated>
+            }
+          />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/logout" element={<Logout />} />
-          <Route path="/daftarhadir" element={<DaftarHadir />} />
-          <Route path="/download" element={<Download />} />
-          <Route path="/jadwal" element={<Jadwal />} />
-          <Route path="/daftarguru" element={<DaftarGuru />} />
+          <Route
+            path="/daftarhadir"
+            element={
+              <Authenticated>
+                <DaftarHadir />
+              </Authenticated>
+            }
+          />
+          <Route
+            path="/download"
+            element={
+              <Authenticated>
+                <Download />
+              </Authenticated>
+            }
+          />
+          <Route
+            path="/jadwal"
+            element={
+              <Authenticated>
+                <Jadwal />
+              </Authenticated>
+            }
+          />
+          <Route
+            path="/daftarguru"
+            element={
+              <Authenticated>
+                <DaftarGuru />
+              </Authenticated>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <Unauthenticated>
+                <Login />
+              </Unauthenticated>
+            }
+          />
         </Routes>
       </div>
     </Router>

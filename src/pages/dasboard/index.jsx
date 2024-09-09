@@ -1,5 +1,5 @@
 import React from "react";
-import LineChart from "../../components/chart/page";
+import LineChart from "../../components/chart";
 
 const Dashboard = ({ isOpen }) => {
   return (
