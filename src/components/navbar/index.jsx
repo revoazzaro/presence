@@ -50,7 +50,7 @@ const Navbar = ({ isMenuOpen, setIsMenuOpen }) => {
 
   return (
     <>
-      <nav className="fixed bg-black w-screen top-0 left-0">
+      <nav className="fixed bg-black w-screen top-0 left-0 z-10">
         <div className="flex px-4 py-3 justify-between">
           <div
             id="menu-button"

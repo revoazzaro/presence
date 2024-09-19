@@ -1,18 +1,48 @@
 import React, { useEffect, useState } from "react";
-import Table from "../../components/table";
 
 const DaftarGuru = () => {
-  const [data, setData] = useState([]);
+  const [dataSiswa, setDataSiswa] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const token = localStorage.getItem("authToken");
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_SISWA}/siswa`)
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setData(data);
-      });
-  });
+    async function fetchSiswa() {
+      try {
+        console.log("Token:", token);
+
+        const res = await fetch(`${import.meta.env.VITE_API_SISWA}/guru`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token,
+          },
+          credentials: "include",
+        });
+
+        if (!res.ok) {
+          const errorText = await res.text();
+          console.error("API Error:", errorText);
+          throw new Error(
+            `Network response was not ok. Status: ${res.status}, Message: ${errorText}`
+          );
+        }
+
+        const json = await res.json();
+        setDataSiswa(json);
+      } catch (error) {
+        console.error("Fetch error:", error.message);
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchSiswa();
+  }, [token]);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <>
@@ -56,10 +86,12 @@ const DaftarGuru = () => {
               className="pl-3 w-full bg-[#f5f5f5] outline-none"
             />
           </div>
-        </div>
-          {data?.map((siswa) => (
-            <Table data={siswa} />
+          {dataSiswa.guru.map((item) => (
+            <li key={item.id}>
+              {item.nama} - {item.tel}
+            </li>
           ))}
+        </div>
       </div>
     </>
   );

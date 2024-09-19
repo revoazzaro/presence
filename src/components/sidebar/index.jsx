@@ -90,7 +90,7 @@ const Sidebar = ({ isOpen, closeMenu }) => {
                 </div>
                 {isSubMenuSiswa && (
                   <ul className="pt-2 pl-2 gap-2 flex flex-col text-md">
-                    <li className="hover:cursor-pointer hover:text-white transition-all">
+                    <li className="hover:cursor-pointer hover:text-white transition-all" onClick={() => navigate("/daftarsiswa")}>
                       Daftar Siswa
                     </li>
                     <li className="hover:cursor-pointer hover:text-white transition-all">

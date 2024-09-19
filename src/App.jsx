@@ -13,6 +13,7 @@ import Download from "./pages/download";
 import Profile from "./pages/profile";
 import Jadwal from "./pages/jadwal";
 import DaftarGuru from "./pages/daftarGuru";
+import DaftarSiswa from "./pages/daftarSiswa";
 import Login from "./pages/login";
 import { WS } from "./ws";
 
@@ -37,7 +38,7 @@ function App() {
   return (
     <Router>
       <Navbar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
-      <div className={`main-content ${isMenuOpen ? "ml-52" : ""}`}>
+      <div className={`main-content ${isMenuOpen ? "md:ml-52 ml-0" : ""}`}>
         <Routes>
           <Route
             path="/"
@@ -86,6 +87,14 @@ function App() {
               <Unauthenticated>
                 <Login />
               </Unauthenticated>
+            }
+          />
+          <Route
+            path="/daftarsiswa"
+            element={
+              <Authenticated>
+                <DaftarSiswa/>
+              </Authenticated>
             }
           />
         </Routes>

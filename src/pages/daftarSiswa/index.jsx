@@ -1,11 +1,218 @@
-import React from 'react'
+import { set } from "date-fns/set";
+import React, { useEffect, useState } from "react";
 
 const DaftarSiswa = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+  const [dataSiswa, setDataSiswa] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [selectedSiswa, setSelectedSiswa] = useState(null);
+  const token = localStorage.getItem("authToken");
 
-export default DaftarSiswa
+  useEffect(() => {
+    async function fetchSiswa() {
+      try {
+        console.log("Token:", token);
+
+        const res = await fetch(`${import.meta.env.VITE_API_SISWA}/siswa`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token,
+          },
+          credentials: "include",
+        });
+
+        if (!res.ok) {
+          const errorText = await res.text();
+          console.error("API Error:", errorText);
+          throw new Error(
+            `Network response was not ok. Status: ${res.status}, Message: ${errorText}`
+          );
+        }
+
+        const json = await res.json();
+        setDataSiswa(json);
+      } catch (error) {
+        console.error("Fetch error:", error.message);
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchSiswa();
+  }, [token]);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+
+  const cardSiswa = (item) => {
+    setSelectedSiswa(item);
+  };
+
+  const closePop = () => {
+    setSelectedSiswa(null);
+  }
+
+  return (
+    <>
+      <div className="flex flex-col mt-12">
+        <div className="-m-1.5 overflow-x-auto">
+          <div className="p-1.5 min-w-full inline-block align-middle">
+            <div className="border rounded-lg divide-y divide-gray-200">
+              <div className="py-3 px-4">
+                <div className="relative max-w-xs">
+                  <label htmlFor="hs-table-search" className="sr-only">
+                    Search
+                  </label>
+                  <input
+                    type="text"
+                    name="hs-table-search"
+                    id="hs-table-search"
+                    className="py-2 px-3 ps-9 block w-full border-gray-200 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none bg-white border text-black"
+                    placeholder="Search for items"
+                  />
+                  <div className="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3">
+                    <svg
+                      className="size-4 text-gray-400"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <circle cx="11" cy="11" r="8"></circle>
+                      <path d="m21 21-4.3-4.3"></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div className="overflow-hidden">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase"
+                      >
+                        NIS
+                      </th>
+                      <th
+                        scope="col"
+                        className="md:px-6 px-3 py-3 text-start text-xs font-medium text-gray-500 uppercase"
+                      >
+                        Nama
+                      </th>
+                      <th
+                        scope="col"
+                        className="py-3 text-start text-xs font-medium text-gray-500 uppercase"
+                      >
+                        Alamat
+                      </th>
+                      <th
+                        scope="col"
+                        className="py-3 text-start text-xs font-medium text-gray-500 uppercase"
+                      >
+                        Jenis Kelamin
+                      </th>
+                      <th
+                        scope="col"
+                        className="pl-8 py-3 text-start text-xs font-medium text-gray-500 uppercase"
+                      >
+                        Kelas
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200">
+                    {dataSiswa.results.map((item) => (
+                      <tr
+                        className="hover:bg-gray-100 hover:cursor-pointer transition-all"
+                        onClick={() => cardSiswa(item)}
+                        key={item.nis}
+                      >
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 text-start">
+                          {item.nis}
+                        </td>
+                        <td className="pl-3 md:px-6 py-4 text-sm min-w-52 text-gray-800 text-start whitespace-normal break-words">
+                          {item.nama}
+                        </td>
+                        <td className="py-4 text-sm text-gray-800 text-start min-w-80 whitespace-normal break-words">
+                          {item.alamat}
+                        </td>
+                        <td className="py-4 whitespace-nowrap text-sm text-gray-800 text-start">
+                          {item.jenis_kelamin}
+                        </td>
+                        <td className="pl-8 pr-4 py-4 whitespace-nowrap text-sm text-gray-800 text-start">
+                          {item.kelas}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        {selectedSiswa && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
+              <button
+                className="text-gray-500 hover:text-gray-700 float-right"
+                onClick={closePop}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#b9bbbd"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+              </button>
+              <div className="text-center">
+                <h2 className="text-xl text-gray-600 font-bold mb-2">{selectedSiswa.nama}</h2>
+                <p className="text-gray-600 mb-4">NIS: {selectedSiswa.nis}</p>
+                <tr>
+                  <td className="text-gray-600 mb-3 text-start">
+                    Alamat
+                  </td>
+                  <td className="text-gray-600 mb-3 text-start pl-4 whitespace-normal break-words ml-2">
+                    {selectedSiswa.alamat}
+                  </td>
+                </tr>
+                <tr>
+                  <td className="text-gray-600 mb-3 text-start">
+                    Jenis Kelamin
+                  </td>
+                  <td className="text-gray-600 mb-3 text-start pl-4">
+                    {selectedSiswa.jenis_kelamin}
+                  </td>
+                </tr>
+                <tr>
+                  <td className="text-gray-600 mb-3 text-start">
+                    Kelas
+                  </td>
+                  <td className="text-gray-600 mb-3 text-start pl-4">
+                    {selectedSiswa.kelas}
+                  </td>
+                </tr>
+                {/* <p className="text-gray-600 mb-2 text-start">
+                  Alamat: {selectedSiswa.alamat}
+                </p>
+                <p className="text-gray-600 mb-2">
+                  Jenis Kelamin: {selectedSiswa.jenis_kelamin}
+                </p>
+                <p className="text-gray-600 mb-4">Kelas: {selectedSiswa.kelas}</p> */}
+                <button
+                  className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+                  onClick={closePop}
+                >
+                  Edit
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </>
+  );
+};
+
+export default DaftarSiswa;

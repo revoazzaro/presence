@@ -1,16 +1,48 @@
-import Table from "../../components/table";
-import useSWRImmutable from "swr/immutable";
-
-const fetcher = (...args) => fetch(...args).then(r => r.json());
+import { useEffect, useState } from "react";
 
 const DaftarHadir = () => {
-  const apiUrl = `${import.meta.env.VITE_API_SISWA}/kelas`;
+  const [dataKelas, setDataKelas] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const token = localStorage.getItem("authToken");
 
-  const { data, error, isLoading } = useSWRImmutable(apiUrl, fetcher);
+  useEffect(() => {
+    async function fetchKelas() {
+      try {
+        console.log("Token:", token);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Failed to load: {error.message}</div>;
-  console.log(data);
+        const res = await fetch(`${import.meta.env.VITE_API_SISWA}/kelas`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token,
+          },
+          credentials: "include",
+        });
+
+        if (!res.ok) {
+          const errorText = await res.text();
+          console.error("API Error:", errorText);
+          throw new Error(
+            `Network response was not ok. Status: ${res.status}, Message: ${errorText}`
+          );
+        }
+
+        const json = await res.json();
+        setDataKelas(json);
+      } catch (error) {
+        console.error("Fetch error:", error.message);
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchKelas();
+  }, [token]);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <>
@@ -54,10 +86,27 @@ const DaftarHadir = () => {
               className="pl-3 w-full bg-[#f5f5f5] outline-none"
             />
           </div>
+          {/* {Object.entries(dataKelas.kelas).map(([key, value]) => (
+            <li>
+              {typeof value === "object" ? (
+                <ul>
+                  {Object.entries(value).map(([subKey, subValue]) => (
+                    <li key={subKey} className="flex">
+                      <div>{subKey}:</div> {subValue}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                value
+              )}
+            </li>
+          ))} */}
+          {dataKelas.kelas.map((item) => (
+            <li key={item.id_kelas}>
+              {item.kelas} - Jurusan: {item.id_jurusan}
+            </li>
+          ))}
         </div>
-        {data.map((d) => (
-          console.log(d)
-        ))}
       </div>
     </>
   );
