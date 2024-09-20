@@ -193,13 +193,6 @@ const DaftarSiswa = () => {
                     {selectedSiswa.kelas}
                   </td>
                 </tr>
-                {/* <p className="text-gray-600 mb-2 text-start">
-                  Alamat: {selectedSiswa.alamat}
-                </p>
-                <p className="text-gray-600 mb-2">
-                  Jenis Kelamin: {selectedSiswa.jenis_kelamin}
-                </p>
-                <p className="text-gray-600 mb-4">Kelas: {selectedSiswa.kelas}</p> */}
                 <button
                   className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
                   onClick={closePop}
