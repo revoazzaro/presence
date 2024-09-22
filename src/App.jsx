@@ -16,6 +16,7 @@ import DaftarGuru from "./pages/daftarGuru";
 import DaftarSiswa from "./pages/daftarSiswa";
 import Login from "./pages/login";
 import { WS } from "./ws";
+import DaftarWaliMurid from "./pages/daftarWaliMurid";
 
 function Authenticated({ children }) {
   const token = localStorage.getItem("authToken");
@@ -94,6 +95,14 @@ function App() {
             element={
               <Authenticated>
                 <DaftarSiswa/>
+              </Authenticated>
+            }
+          />
+          <Route
+            path="/daftarwalimurid"
+            element={
+              <Authenticated>
+                <DaftarWaliMurid/>
               </Authenticated>
             }
           />

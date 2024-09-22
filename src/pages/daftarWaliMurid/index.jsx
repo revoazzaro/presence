@@ -1,7 +1,6 @@
-import { set } from "date-fns/set";
 import React, { useEffect, useState } from "react";
 
-const DaftarSiswa = () => {
+const DaftarWaliMurid = () => {
   const [dataSiswa, setDataSiswa] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -13,14 +12,17 @@ const DaftarSiswa = () => {
       try {
         console.log("Token:", token);
 
-        const res = await fetch(`${import.meta.env.VITE_API_SISWA}/guru`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token,
-          },
-          credentials: "include",
-        });
+        const res = await fetch(
+          `${import.meta.env.VITE_API_SISWA}/wali-murid`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: token,
+            },
+            credentials: "include",
+          }
+        );
 
         if (!res.ok) {
           const errorText = await res.text();
@@ -52,7 +54,7 @@ const DaftarSiswa = () => {
 
   const closePop = () => {
     setSelectedSiswa(null);
-  }
+  };
 
   return (
     <>
@@ -91,45 +93,63 @@ const DaftarSiswa = () => {
                   </div>
                 </div>
               </div>
-              <div className="relative">
-                <table className="text-left w-full divide-y divide-gray-200 table-fixed">
-                  <thead className="bg-gray-50 justify-between ml-10">
+              <div className="overflow-hidden">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
                     <tr>
                       <th
                         scope="col"
-                        className="md:px-6 px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase"
+                        className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase"
                       >
-                        Nama
+                        NIS
                       </th>
                       <th
                         scope="col"
-                        className="pl-3 md:px-6 py-4 text-center text-xs font-medium text-gray-500 uppercase"
+                        className="md:px-6 px-3 py-3 text-start text-xs font-medium text-gray-500 uppercase"
                       >
-                        no telepon
+                        Nama siswa
                       </th>
                       <th
                         scope="col"
-                        className="text-xs text-center font-medium text-gray-500 uppercase"
+                        className="py-3 text-start text-xs font-medium text-gray-500 uppercase"
                       >
                         kelas
+                      </th>
+                      <th
+                        scope="col"
+                        className="py-3 text-start text-xs font-medium text-gray-500 uppercase"
+                      >
+                        nama wali
+                      </th>
+                      <th
+                        scope="col"
+                        className="py-3 text-start text-xs font-medium text-gray-500 uppercase"
+                      >
+                        no telepon
                       </th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
-                    {dataSiswa.guru.map((item) => (
+                    {dataSiswa.results.map((item) => (
                       <tr
                         className="hover:bg-gray-100 hover:cursor-pointer transition-all"
                         onClick={() => cardSiswa(item)}
-                        key={item.id}
+                        key={item.nis}
                       >
-                        <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium text-gray-800">
-                          {item.nama}
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 text-start">
+                          {item.nis}
                         </td>
-                        <td className="pl-3 md:px-6 py-4 text-sm text-center min-w-52 text-gray-800 whitespace-normal break-words">
-                          {item.tel}
+                        <td className="pl-3 md:px-6 py-4 text-sm max-w-52 text-gray-800 text-start whitespace-normal break-words">
+                          {item.siswa}
                         </td>
-                        <td className="py-4 text-sm text-gray-800 text-center min-w-80 whitespace-normal break-words">
+                        <td className="py-4 text-sm text-gray-800 text-start min-w-32 whitespace-normal break-words">
                           {item.kelas}
+                        </td>
+                        <td className="py-4 whitespace-nowrap text-sm text-gray-800 text-start">
+                          {item.nama ? item.nama : "-"}
+                        </td>
+                        <td className="whitespace-nowrap text-sm text-gray-800 text-start">
+                          {item.tel ? item.tel : "-"}
                         </td>
                       </tr>
                     ))}
@@ -141,21 +161,36 @@ const DaftarSiswa = () => {
         </div>
         {selectedSiswa && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+            <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
               <button
                 className="text-gray-500 hover:text-gray-700 float-right"
                 onClick={closePop}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#b9bbbd"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24px"
+                  viewBox="0 -960 960 960"
+                  width="24px"
+                  fill="#b9bbbd"
+                >
+                  <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+                </svg>
               </button>
               <div className="text-center">
-                <h2 className="text-xl text-gray-600 font-bold mb-2">{selectedSiswa.nama}</h2>
+                <h2 className="text-xl text-gray-600 font-bold mb-2 pl-6 text-center">
+                  {selectedSiswa.nama ? selectedSiswa.nama : "-"}
+                </h2>
+                <p className="text-gray-600 mb-3 text-center">{selectedSiswa.tel ? selectedSiswa.tel : "-"}</p>
                 <tr>
-                  <td className="text-gray-600 mb-3 text-start">
-                    No Telepon
-                  </td>
+                  <td className="text-gray-600 mb-3 text-start">Nama Siswa</td>
                   <td className="text-gray-600 mb-3 text-start pl-4 whitespace-normal break-words ml-2">
-                    {selectedSiswa.tel}
+                    {selectedSiswa.siswa}
+                  </td>
+                </tr>
+                <tr>
+                  <td className="text-gray-600 mb-3 text-start">NIS</td>
+                  <td className="text-gray-600 mb-3 text-start pl-4 whitespace-normal break-words ml-2">
+                    {selectedSiswa.nis}
                   </td>
                 </tr>
                 <tr>
@@ -163,7 +198,7 @@ const DaftarSiswa = () => {
                     Kelas
                   </td>
                   <td className="text-gray-600 mb-3 text-start pl-4">
-                    {selectedSiswa.kelas ? selectedSiswa.kelas : "-"}
+                    {selectedSiswa.kelas}
                   </td>
                 </tr>
                 <button
@@ -181,4 +216,4 @@ const DaftarSiswa = () => {
   );
 };
 
-export default DaftarSiswa;
+export default DaftarWaliMurid;

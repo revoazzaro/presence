@@ -46,66 +46,87 @@ const DaftarHadir = () => {
 
   return (
     <>
-      <div className=" bg-[#fefefe] mt-12 shadow-md rounded-md border-[#000] border-[1px] transition-all">
-        <div className="md:flex flex-none text-black p-3 md:text-lg text-md font-semibold bg-[#f5f5f5] w-full rounded-t-md border-b-[1px] border-black md:justify-between justify-normal">
-          <div className="flex gap-2 text-center items-center md:text-base text-sm">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="24px"
-              viewBox="0 -960 960 960"
-              width="24px"
-              fill="#000000"
-            >
-              <path d="M280-400v-80h400v80H280Zm0 160v-80h280v80H280ZM200-80q-33 0-56.5-23.5T120-160v-560q0-33 23.5-56.5T200-800h40v-80h80v80h320v-80h80v80h40q33 0 56.5 23.5T840-720v560q0 33-23.5 56.5T760-80H200Zm0-80h560v-400H200v400Z" />
-            </svg>
-            <div className="items-center text-center">
-              Daftar Kehadiran Siswa
+      <div className="flex flex-col mt-12">
+        <div className="-m-1.5 overflow-x-auto">
+          <div className="p-1.5 min-w-full inline-block align-middle">
+            <div className="border rounded-lg divide-y divide-gray-200">
+              <div className="py-3 px-4">
+                <div className="relative max-w-xs">
+                  <label htmlFor="hs-table-search" className="sr-only">
+                    Search
+                  </label>
+                  <input
+                    type="text"
+                    name="hs-table-search"
+                    id="hs-table-search"
+                    className="py-2 px-3 ps-9 block w-full border-gray-200 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none bg-white border text-black"
+                    placeholder="Search for items"
+                  />
+                  <div className="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3">
+                    <svg
+                      className="size-4 text-gray-400"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <circle cx="11" cy="11" r="8"></circle>
+                      <path d="m21 21-4.3-4.3"></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div className="relative">
+                <table className="text-left w-full divide-y divide-gray-200 table-fixed">
+                  <thead className="bg-gray-50 justify-between ml-10">
+                    <tr>
+                      <th
+                        scope="col"
+                        className="pl-3 md:px-6 py-4 text-center text-xs font-medium text-gray-500 uppercase"
+                        >
+                        id jurusan
+                      </th>
+                      <th
+                        scope="col"
+                        className="text-xs text-center font-medium text-gray-500 uppercase"
+                        >
+                        id kelas
+                      </th>
+                      <th
+                        scope="col"
+                        className="md:px-6 px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase"
+                        >
+                        kelas
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200">
+                    {dataKelas.kelas.map((item) => (
+                      <tr
+                        className="hover:bg-gray-100 hover:cursor-pointer transition-all"
+                        key={item.id}
+                      >
+                        <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium text-gray-800">
+                          {item.id_jurusan}
+                        </td>
+                        <td className="pl-3 md:px-6 py-4 text-sm text-center min-w-52 text-gray-800 whitespace-normal break-words">
+                          {item.id_kelas}
+                        </td>
+                        <td className="py-4 text-sm text-gray-800 text-center min-w-80 whitespace-normal break-words">
+                          {item.kelas}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
-          <div className="flex items-center md:w-64 w-full md:mt-0 mt-3 rounded-lg py-2 pl-3 pr-4 text-sm bg-[#f5f5f5] border-[1px]">
-            <span className="pointer-events-none flex-shrink-0">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="h-4 w-4 text-neutral-500"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                />
-              </svg>
-            </span>
-            <input
-              id="inputSearch"
-              type="text"
-              placeholder="Cari..."
-              className="pl-3 w-full bg-[#f5f5f5] outline-none"
-            />
-          </div>
-          {/* {Object.entries(dataKelas.kelas).map(([key, value]) => (
-            <li>
-              {typeof value === "object" ? (
-                <ul>
-                  {Object.entries(value).map(([subKey, subValue]) => (
-                    <li key={subKey} className="flex">
-                      <div>{subKey}:</div> {subValue}
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                value
-              )}
-            </li>
-          ))} */}
-          {dataKelas.kelas.map((item) => (
-            <li key={item.id_kelas}>
-              {item.kelas} - Jurusan: {item.id_jurusan}
-            </li>
-          ))}
         </div>
       </div>
     </>

@@ -93,7 +93,7 @@ const Sidebar = ({ isOpen, closeMenu }) => {
                     <li className="hover:cursor-pointer hover:text-white transition-all" onClick={() => navigate("/daftarsiswa")}>
                       Daftar Siswa
                     </li>
-                    <li className="hover:cursor-pointer hover:text-white transition-all">
+                    <li className="hover:cursor-pointer hover:text-white transition-all" onClick={() => navigate("/daftarwalimurid")}>
                       Daftar Wali Murid
                     </li>
                     <li className="hover:cursor-pointer hover:text-white transition-all">
