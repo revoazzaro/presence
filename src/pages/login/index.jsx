@@ -9,22 +9,48 @@ const Login = () => {
 
   async function login(e) {
     e.preventDefault();
-    const data = {username: usernameRef.current.value, password: passwordRef.current.value};
-    const res = await fetch(`${import.meta.env.VITE_API_SISWA}/login`, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      method: 'POST',
-      body: JSON.stringify(data),
-      credentials: 'include',
-    });
-    const json = await res.json();
-    if(json.token) {
-      console.log('LOGIN SUCCESS')
-      localStorage.setItem('authToken', json.token)
-      navigate('/')
+    const data = {
+      username: usernameRef.current.value,
+      password: passwordRef.current.value,
+    };
+  
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_SISWA}/login`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+        body: JSON.stringify(data),
+        credentials: 'include',
+      });
+  
+      if (!res.ok) {
+        const errorText = await res.text();
+        console.error('Error:', errorText);
+        alert('Login failed: ' + errorText);
+        return;
+      }
+  
+      const json = await res.json();
+      console.log('Response JSON:', json);
+
+      if (json.status === 'success' && json.data) {
+        const token = json.data;
+        console.log('Token received:', token);
+
+        localStorage.setItem('authToken', token);
+        
+        navigate('/');
+      } else {
+        console.error('Token not found in response');
+      }
+  
+    } catch (error) {
+      console.error('Request failed:', error);
     }
   }
+  
+  
 
   return (
     <>
@@ -71,7 +97,6 @@ const Login = () => {
                 <button
                   type="submit"
                   className="w-full text-white bg-black hover:bg-gray-100 hover:text-black hover:border-[1px] hover:border-[#000000] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-3 text-center"
-                  onClick={login}
                 >
                   Sign in
                 </button>
