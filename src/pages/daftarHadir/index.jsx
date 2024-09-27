@@ -106,10 +106,10 @@ const DaftarHadir = () => {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
-                    {dataKelas.kelas.map((item) => (
+                    {dataKelas.data.map((item) => (
                       <tr
                         className="hover:bg-gray-100 hover:cursor-pointer transition-all"
-                        key={item.id}
+                        key={item.kelas}
                       >
                         <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium text-gray-800">
                           {item.id_jurusan}

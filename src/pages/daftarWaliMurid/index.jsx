@@ -130,7 +130,7 @@ const DaftarWaliMurid = () => {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
-                    {dataSiswa.results.map((item) => (
+                    {dataSiswa.data.map((item) => (
                       <tr
                         className="hover:bg-gray-100 hover:cursor-pointer transition-all"
                         onClick={() => cardSiswa(item)}

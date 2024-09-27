@@ -1,4 +1,3 @@
-import { data } from "autoprefixer";
 import React, { useEffect, useState } from "react";
 
 const DaftarSiswa = () => {
@@ -42,10 +41,19 @@ const DaftarSiswa = () => {
     if (token) {
       fetchSiswa();
     }
-
   }, [token]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading)
+    return (
+      <div>
+        <div class="loading-wave">
+          <div class="loading-bar"></div>
+          <div class="loading-bar"></div>
+          <div class="loading-bar"></div>
+          <div class="loading-bar"></div>
+        </div>
+      </div>
+    );
   if (error) return <div>Error: {error}</div>;
 
   const cardSiswa = (item) => {
@@ -110,13 +118,13 @@ const DaftarSiswa = () => {
       setDataSiswa((prevState) => ({
         ...prevState,
         data: prevState.data.map((siswa) =>
-          siswa.nis === selectedSiswa.nis ? { ...selectedSiswa, ...updateSiswa } : siswa
+          siswa.nis === selectedSiswa.nis
+            ? { ...selectedSiswa, ...updateSiswa }
+            : siswa
         ),
       }));
-      
 
       setSelectedSiswa(null);
-      
     } catch (error) {
       console.error("Error Updating Siswa:", error.message);
     }
