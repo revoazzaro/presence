@@ -2,13 +2,15 @@ import { set } from "date-fns/set";
 import React, { useEffect, useState } from "react";
 
 const DaftarSiswa = () => {
-  const [dataSiswa, setDataSiswa] = useState(null);
+  const [dataGuru, setDataGuru] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedSiswa, setSelectedSiswa] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
   const token = localStorage.getItem("authToken");
 
   useEffect(() => {
+
     async function fetchSiswa() {
       try {
         console.log("Token:", token);
@@ -31,7 +33,7 @@ const DaftarSiswa = () => {
         }
 
         const json = await res.json();
-        setDataSiswa(json);
+        setDataGuru(json);
       } catch (error) {
         console.error("Fetch error:", error.message);
         setError(error.message);
@@ -43,7 +45,16 @@ const DaftarSiswa = () => {
     fetchSiswa();
   }, [token]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div>
+    <div>
+        <div class="loading-wave">
+          <div class="loading-bar"></div>
+          <div class="loading-bar"></div>
+          <div class="loading-bar"></div>
+          <div class="loading-bar"></div>
+        </div>
+      </div>
+  </div>;
   if (error) return <div>Error: {error}</div>;
 
   const cardSiswa = (item) => {
@@ -53,6 +64,10 @@ const DaftarSiswa = () => {
   const closePop = () => {
     setSelectedSiswa(null);
   }
+
+  const filterGuru = dataGuru.data.filter( (guru) =>
+    guru.nama.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <>
@@ -70,7 +85,9 @@ const DaftarSiswa = () => {
                     name="hs-table-search"
                     id="hs-table-search"
                     className="py-2 px-3 ps-9 block w-full border-gray-200 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none bg-white border text-black"
-                    placeholder="Search for items"
+                    placeholder="Cari berdasarkan nama"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
                   />
                   <div className="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3">
                     <svg
@@ -116,8 +133,9 @@ const DaftarSiswa = () => {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
-                    {dataSiswa.data.map((item) => (
-                      <tr
+                    {filterGuru.length > 0 ? (
+                      filterGuru.map((item) => (
+                        <tr
                         className="hover:bg-gray-100 hover:cursor-pointer transition-all"
                         onClick={() => cardSiswa(item)}
                         key={item.id}
@@ -132,7 +150,17 @@ const DaftarSiswa = () => {
                           {item.kelas}
                         </td>
                       </tr>
-                    ))}
+                      ))
+                    ) : (
+                      <tr>
+                        <td
+                          colSpan="3"
+                          className="text-center py-4 text-sm text-gray-500"
+                        >
+                          Tidak ada data yang sesuai dengan pencarian.
+                        </td>
+                      </tr>
+                    )}
                   </tbody>
                 </table>
               </div>
