@@ -27,7 +27,7 @@ const Sidebar = ({ isOpen, closeMenu }) => {
           <p className="text-white font-semibold text-2xl">Absensi</p>
           <ul className="gap-8 flex flex-col pt-8">
             <li className="text-[#595c5f] font-medium hover:cursor-pointer hover:text-white text-lg transition-all">
-              <Link to={"/"}>Dasboard</Link>
+              <Link to={"/"}>Dashboard</Link>
             </li>
             <a onClick={toggleMenuAbsen} className="text-[#595c5f] font-medium">
               {isSubMenuAbsen}

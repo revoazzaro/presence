@@ -1,7 +1,61 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import LineChart from "../../components/chart";
 
 const Dashboard = ({ isOpen }) => {
+  const [dataSiswa, setDataSiswa] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [selectedSiswa, setSelectedSiswa] = useState(null);
+  const token = localStorage.getItem("authToken");
+
+  useEffect(() => {
+
+    async function fetchSiswa() {
+      try {
+        console.log("Token:", token);
+
+        const res = await fetch(`${import.meta.env.VITE_API_SISWA}/featured`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token,
+          },
+          credentials: "include",
+        });
+
+        if (!res.ok) {
+          const errorText = await res.text();
+          console.error("API Error:", errorText);
+          throw new Error(
+            `Network response was not ok. Status: ${res.status}, Message: ${errorText}`
+          );
+        }
+
+        const json = await res.json();
+        setDataSiswa(json);
+      } catch (error) {
+        console.error("Fetch error:", error.message);
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchSiswa();
+  }, [token]);
+
+  if (loading) return <div>
+    <div>
+        <div className="loading-wave">
+          <div className="loading-bar"></div>
+          <div className="loading-bar"></div>
+          <div className="loading-bar"></div>
+          <div className="loading-bar"></div>
+        </div>
+      </div>
+  </div>;
+  if (error) return <div>Error: {error}</div>;
+
   return (
     <>
       <div className={`${isOpen ? "ml-52" : ""}`}>
@@ -13,7 +67,7 @@ const Dashboard = ({ isOpen }) => {
                 <div className="items-center justify-between px-4 flex">
                   <div className="text-lg">
                     <p>Siswa Terdaftar</p>
-                    <p className="font-semibold">800</p>
+                    <p className="font-semibold">{dataSiswa.data.siswa_count}</p>
                   </div>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -32,7 +86,7 @@ const Dashboard = ({ isOpen }) => {
                 <div className="items-center justify-between px-4 flex">
                   <div className="text-lg">
                     <p>Siswa Hadir</p>
-                    <p className="font-semibold">0</p>
+                    <p className="font-semibold">{dataSiswa.data.presenced_count}</p>
                   </div>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -46,8 +100,8 @@ const Dashboard = ({ isOpen }) => {
                 </div>
               </div>
             </div>
-            <div className="w-full md:h-72 h-44">
-              <LineChart />
+            <div className="w-full md:h-72 h-96">
+              <LineChart presenceData={dataSiswa.data.last_week_presence}/>
             </div>
           </div>
         </div>
