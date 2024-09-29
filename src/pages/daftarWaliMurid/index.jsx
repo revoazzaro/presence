@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 
 const DaftarWaliMurid = () => {
-  const [dataSiswa, setDataSiswa] = useState(null);
+  const [dataWali, setDataWali] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedSiswa, setSelectedSiswa] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
   const token = localStorage.getItem("authToken");
 
   useEffect(() => {
@@ -33,7 +34,7 @@ const DaftarWaliMurid = () => {
         }
 
         const json = await res.json();
-        setDataSiswa(json);
+        setDataWali(json);
       } catch (error) {
         console.error("Fetch error:", error.message);
         setError(error.message);
@@ -56,6 +57,12 @@ const DaftarWaliMurid = () => {
     setSelectedSiswa(null);
   };
 
+  const filterWaliMurid = dataWali.data.filter((wali) => 
+    wali.nama?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    wali.nis.toString().includes(searchTerm) ||
+    wali.siswa.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+
   return (
     <>
       <div className="flex flex-col mt-12">
@@ -73,6 +80,8 @@ const DaftarWaliMurid = () => {
                     id="hs-table-search"
                     className="py-2 px-3 ps-9 block w-full border-gray-200 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none bg-white border text-black"
                     placeholder="Search for items"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
                   />
                   <div className="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3">
                     <svg
@@ -130,8 +139,9 @@ const DaftarWaliMurid = () => {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
-                    {dataSiswa.data.map((item) => (
-                      <tr
+                    {filterWaliMurid.length > 0 ? (
+                      filterWaliMurid.map((item) => (
+                        <tr
                         className="hover:bg-gray-100 hover:cursor-pointer transition-all"
                         onClick={() => cardSiswa(item)}
                         key={item.nis}
@@ -152,7 +162,17 @@ const DaftarWaliMurid = () => {
                           {item.tel ? item.tel : "-"}
                         </td>
                       </tr>
-                    ))}
+                      ))
+                    ) : (
+                      <tr>
+                        <td
+                          colSpan="6"
+                          className="text-center py-4 text-sm text-gray-500"
+                        >
+                          Tidak ada data yang sesuai dengan pencarian.
+                        </td>
+                      </tr>
+                    )}
                   </tbody>
                 </table>
               </div>
