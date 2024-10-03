@@ -46,7 +46,16 @@ const DaftarWaliMurid = () => {
     fetchSiswa();
   }, [token]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div>
+    <div>
+      <div className="loading-wave">
+        <div className="loading-bar"></div>
+        <div className="loading-bar"></div>
+        <div className="loading-bar"></div>
+        <div className="loading-bar"></div>
+      </div>
+    </div>
+  </div>;
   if (error) return <div>Error: {error}</div>;
 
   const cardSiswa = (item) => {
