@@ -34,12 +34,13 @@ const Navbar = ({ isMenuOpen, setIsMenuOpen }) => {
       method: "GET",
       credentials: "include",
     });
-    if(res.ok) { 
-      localStorage.removeItem('authToken');
+    if (res.ok) {
+      localStorage.removeItem("authToken");
+      localStorage.removeItem("userRole");
       setIsdropdownOpen(false);
-      navigate('/login');
+      navigate("/login");
     }
-  }
+  };
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -52,27 +53,27 @@ const Navbar = ({ isMenuOpen, setIsMenuOpen }) => {
     <>
       <nav className="fixed bg-black w-screen top-0 left-0 z-10">
         <div className="flex px-4 py-3 justify-between">
-          <div
-            id="menu-button"
-            className="hover:cursor-pointer"
-            onClick={togglemenu}
-          >
-            <span
-              className={`button-menu transition duration-300 ease-in-out origin-top-left block ${
-                isMenuOpen ? "transform rotate-45" : ""
-              }`}
-            ></span>
-            <span
-              className={`button-menu transition duration-300 ease-in-out block ${
-                isMenuOpen ? "scale-0" : ""
-              }`}
-            ></span>
-            <span
-              className={`button-menu transition duration-300 ease-in-out origin-bottom-left block ${
-                isMenuOpen ? "transform -rotate-45" : ""
-              }`}
-            ></span>
-          </div>
+            <div
+              id="menu-button"
+              className="hover:cursor-pointer"
+              onClick={togglemenu}
+            >
+              <span
+                className={`button-menu transition duration-300 ease-in-out origin-top-left block ${
+                  isMenuOpen ? "transform rotate-45" : ""
+                }`}
+              ></span>
+              <span
+                className={`button-menu transition duration-300 ease-in-out block ${
+                  isMenuOpen ? "scale-0" : ""
+                }`}
+              ></span>
+              <span
+                className={`button-menu transition duration-300 ease-in-out origin-bottom-left block ${
+                  isMenuOpen ? "transform -rotate-45" : ""
+                }`}
+              ></span>
+            </div>
           <div
             ref={iconRef}
             className="justify-between items-center my-auto hover:cursor-pointer mr-4 flex"
@@ -94,7 +95,9 @@ const Navbar = ({ isMenuOpen, setIsMenuOpen }) => {
               width="24px"
               fill="#e8eaed"
               className={`${
-                isdropdownOpen ? "transform rotate-180 transition-all" : "transition-all transform"
+                isdropdownOpen
+                  ? "transform rotate-180 transition-all"
+                  : "transition-all transform"
               }`}
             >
               <path d="M480-360 280-560h400L480-360Z" />
@@ -115,10 +118,7 @@ const Navbar = ({ isMenuOpen, setIsMenuOpen }) => {
                 >
                   Profile
                 </li>
-                <li
-                  className="dropdown-item text-black"
-                  onClick={logout}
-                >
+                <li className="dropdown-item text-black" onClick={logout}>
                   Log Out
                 </li>
               </ul>
@@ -126,7 +126,7 @@ const Navbar = ({ isMenuOpen, setIsMenuOpen }) => {
           )}
           {isMenuOpen && (
             <>
-              <Sidebar isOpen={isMenuOpen} />
+              <Sidebar isOpen={isMenuOpen} closeMenu={togglemenu}/>
             </>
           )}
         </div>

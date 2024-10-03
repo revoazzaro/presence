@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 const Sidebar = ({ isOpen, closeMenu }) => {
   const [isSubMenuAbsen, setIsSubMenuAbsen] = useState(false);
   const [isSubMenuSiswa, setIsSubMenuSiswa] = useState(false);
+  const token = localStorage.getItem("userRole");
 
   const navigate = useNavigate();
 
@@ -15,6 +16,11 @@ const Sidebar = ({ isOpen, closeMenu }) => {
   const toggleMenuSiswa = () => {
     setIsSubMenuSiswa(!isSubMenuSiswa);
   };
+
+  const handleNavigate = (pate) => {
+    navigate(pate);
+    closeMenu();
+  }
 
   return (
     <>
@@ -27,7 +33,7 @@ const Sidebar = ({ isOpen, closeMenu }) => {
           <p className="text-white font-semibold text-2xl">Absensi</p>
           <ul className="gap-8 flex flex-col pt-8">
             <li className="text-[#595c5f] font-medium hover:cursor-pointer hover:text-white text-lg transition-all">
-              <Link to={"/"}>Dashboard</Link>
+              <Link to={"/"} onClick={handleNavigate} >Dashboard</Link>
             </li>
             <a onClick={toggleMenuAbsen} className="text-[#595c5f] font-medium">
               {isSubMenuAbsen}
@@ -49,19 +55,19 @@ const Sidebar = ({ isOpen, closeMenu }) => {
                   <ul className="pt-2 pl-2 gap-2 flex flex-col text-md">
                     <li
                       className="hover:cursor-pointer hover:text-white transition-all"
-                      onClick={() => navigate("/daftarhadir")}
+                      onClick={() => handleNavigate("/daftarhadir")}
                     >
                       Daftar hadir
                     </li>
                     <li
                       className="hover:cursor-pointer hover:text-white transition-all"
-                      onClick={() => navigate("/download")}
+                      onClick={() => handleNavigate("/download")}
                     >
                       Download
                     </li>
                     <li
                       className="hover:cursor-pointer hover:text-white transition-all"
-                      onClick={() => navigate("/jadwal")}
+                      onClick={() => handleNavigate("/jadwal")}
                     >
                       Jadwal
                     </li>
@@ -69,9 +75,9 @@ const Sidebar = ({ isOpen, closeMenu }) => {
                 )}
               </div>
             </a>
-            <a className="text-[#595c5f] font-medium hover:cursor-pointer hover:text-white text-lg transition-all" onClick={() => navigate("/daftarguru")}>
+            {token === "admin" || token === "guru" ? <a className="text-[#595c5f] font-medium hover:cursor-pointer hover:text-white text-lg transition-all" onClick={() => handleNavigate("/daftarguru")}>
               Daftar Guru
-            </a>
+            </a> : null}
             <a onClick={toggleMenuSiswa} className="text-[#595c5f] font-medium">
               {isSubMenuSiswa}
               <div className="flex flex-col">
@@ -90,14 +96,11 @@ const Sidebar = ({ isOpen, closeMenu }) => {
                 </div>
                 {isSubMenuSiswa && (
                   <ul className="pt-2 pl-2 gap-2 flex flex-col text-md">
-                    <li className="hover:cursor-pointer hover:text-white transition-all" onClick={() => navigate("/daftarsiswa")}>
+                    <li className="hover:cursor-pointer hover:text-white transition-all" onClick={() => handleNavigate("/daftarsiswa")}>
                       Daftar Siswa
                     </li>
-                    <li className="hover:cursor-pointer hover:text-white transition-all" onClick={() => navigate("/daftarwalimurid")}>
+                    <li className="hover:cursor-pointer hover:text-white transition-all" onClick={() => handleNavigate("/daftarwalimurid")}>
                       Daftar Wali Murid
-                    </li>
-                    <li className="hover:cursor-pointer hover:text-white transition-all">
-                      Daftar Kartu
                     </li>
                   </ul>
                 )}
