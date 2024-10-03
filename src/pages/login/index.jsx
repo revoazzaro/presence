@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -6,6 +6,7 @@ const Login = () => {
   const navigate = useNavigate();
   const usernameRef = useRef();
   const passwordRef = useRef();
+  const [errorMessage, setErrorMessage] = useState('');
 
   async function login(e) {
     e.preventDefault();
@@ -13,8 +14,11 @@ const Login = () => {
       username: usernameRef.current.value,
       password: passwordRef.current.value,
     };
-    console.log('user', data);
-    
+
+    if (!data.username || !data.password) {
+      setErrorMessage('Username and password are required');
+      return;
+    }
     
     try {
       const res = await fetch(`${import.meta.env.VITE_API_SISWA}/login`, {
@@ -27,9 +31,9 @@ const Login = () => {
       });
   
       if (!res.ok) {
-        const errorText = await res.text();
-        console.error('Error:', errorText);
-        alert('Login failed: ' + errorText);
+        const errorData = await res.json();
+        console.error('Error:', errorData.message);
+        setErrorMessage('Login failed: ' + errorData.message);
         return;
       }
       
@@ -55,7 +59,7 @@ const Login = () => {
         if (!userRes.ok) {
           const errorText = await userRes.text();
           console.error('Failed to fetch user details:', userRes.status, errorText);
-          alert('Failed to fetch user details. Please try again.');
+          setErrorMessage('Failed to fetch user details. Please try again.');
           return;
         }
   
@@ -68,7 +72,7 @@ const Login = () => {
           navigate('/');
         } else {
           console.error('Role is undefined in user details response:', userJson.data);
-          alert('Role is undefined. Please try again.');
+          setErrorMessage('Role is undefined. Please try again.');
         }
       } else {
         console.error('Token not found in response');
@@ -78,8 +82,6 @@ const Login = () => {
       console.error('Request failed:', error);
     }
   }
-  
-  
 
   return (
     <>
@@ -122,7 +124,13 @@ const Login = () => {
                     ref={passwordRef}
                     required
                   />
+                  <span></span>
                 </div>
+                {errorMessage && (
+                  <div className="text-red-500 text-sm">
+                    {errorMessage}
+                  </div>
+                )}
                 <button
                   type="submit"
                   className="w-full text-white bg-black hover:bg-gray-100 hover:text-black hover:border-[1px] hover:border-[#000000] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-3 text-center"
