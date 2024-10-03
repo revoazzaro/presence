@@ -13,7 +13,9 @@ const Login = () => {
       username: usernameRef.current.value,
       password: passwordRef.current.value,
     };
-  
+    console.log('user', data);
+    
+    
     try {
       const res = await fetch(`${import.meta.env.VITE_API_SISWA}/login`, {
         headers: {
@@ -30,17 +32,44 @@ const Login = () => {
         alert('Login failed: ' + errorText);
         return;
       }
-  
+      
+      console.log('Response:', res);
       const json = await res.json();
       console.log('Response JSON:', json);
 
       if (json.status === 'success' && json.data) {
         const token = json.data;
         console.log('Token received:', token);
-
-        localStorage.setItem('authToken', token);
         
-        navigate('/');
+        localStorage.setItem('authToken', token);
+
+        const userRes = await fetch(`${import.meta.env.VITE_API_SISWA}/me`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token,
+          },
+          credentials: "include",
+        });
+
+        if (!userRes.ok) {
+          const errorText = await userRes.text();
+          console.error('Failed to fetch user details:', userRes.status, errorText);
+          alert('Failed to fetch user details. Please try again.');
+          return;
+        }
+  
+        const userJson = await userRes.json();
+        console.log('User details JSON:', userJson);
+  
+        if (userJson.data && userJson.data.role) {
+          localStorage.setItem("userRole", userJson.data.role);
+          console.log('User role saved:', userJson.data.role);
+          navigate('/');
+        } else {
+          console.error('Role is undefined in user details response:', userJson.data);
+          alert('Role is undefined. Please try again.');
+        }
       } else {
         console.error('Token not found in response');
       }

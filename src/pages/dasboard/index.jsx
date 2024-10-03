@@ -5,11 +5,9 @@ const Dashboard = ({ isOpen }) => {
   const [dataSiswa, setDataSiswa] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedSiswa, setSelectedSiswa] = useState(null);
   const token = localStorage.getItem("authToken");
 
   useEffect(() => {
-
     async function fetchSiswa() {
       try {
         console.log("Token:", token);
@@ -44,16 +42,19 @@ const Dashboard = ({ isOpen }) => {
     fetchSiswa();
   }, [token]);
 
-  if (loading) return <div>
-    <div>
-        <div className="loading-wave">
-          <div className="loading-bar"></div>
-          <div className="loading-bar"></div>
-          <div className="loading-bar"></div>
-          <div className="loading-bar"></div>
+  if (loading)
+    return (
+      <div>
+        <div>
+          <div className="loading-wave">
+            <div className="loading-bar"></div>
+            <div className="loading-bar"></div>
+            <div className="loading-bar"></div>
+            <div className="loading-bar"></div>
+          </div>
         </div>
       </div>
-  </div>;
+    );
   if (error) return <div>Error: {error}</div>;
 
   return (
@@ -67,7 +68,9 @@ const Dashboard = ({ isOpen }) => {
                 <div className="items-center justify-between px-4 flex">
                   <div className="text-lg">
                     <p>Siswa Terdaftar</p>
-                    <p className="font-semibold">{dataSiswa.data.siswa_count}</p>
+                    <p className="font-semibold">
+                      {dataSiswa.data.siswa_count}
+                    </p>
                   </div>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -86,7 +89,9 @@ const Dashboard = ({ isOpen }) => {
                 <div className="items-center justify-between px-4 flex">
                   <div className="text-lg">
                     <p>Siswa Hadir</p>
-                    <p className="font-semibold">{dataSiswa.data.presenced_count}</p>
+                    <p className="font-semibold">
+                      {dataSiswa.data.presenced_count}
+                    </p>
                   </div>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -100,9 +105,11 @@ const Dashboard = ({ isOpen }) => {
                 </div>
               </div>
             </div>
-            <div className="w-full md:h-72 h-96">
-              <LineChart presenceData={dataSiswa.data.last_week_presence}/>
-            </div>
+            {dataSiswa.data.last_week_presence ? (
+              <div className="w-full md:h-72 h-96">
+                <LineChart presenceData={dataSiswa.data.last_week_presence} />
+              </div>
+            ) : null}
           </div>
         </div>
       </div>

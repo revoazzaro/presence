@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { Chart } from 'chart.js/auto';
+import React, { useEffect, useRef } from "react";
+import { Chart } from "chart.js/auto";
 
 const LineChart = ({ presenceData }) => {
   const chartRef = useRef(null);
@@ -11,19 +11,20 @@ const LineChart = ({ presenceData }) => {
     }
     const myChartRef = chartRef.current.getContext("2d");
 
-    const labels = presenceData.map(item => item.tanggal);
-    const dataTepat = presenceData.map(item => parseInt(item.tepat, 10));
-    const dataTelat = presenceData.map(item => parseInt(item.telat, 10));
-    const dataIzin = presenceData.map(item => parseInt(item.izin, 10));
-    const dataSakit = presenceData.map(item => parseInt(item.sakit, 10));
-    const dataTanpaKeterangan = presenceData.map(item => parseInt(item.tanpa_keterangan, 10));
-    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    const labels = presenceData.map((item) => item.tanggal);
+    const dataTepat = presenceData.map((item) => parseInt(item.tepat, 10));
+    const dataTelat = presenceData.map((item) => parseInt(item.telat, 10));
+    const dataIzin = presenceData.map((item) => parseInt(item.izin, 10));
+    const dataSakit = presenceData.map((item) => parseInt(item.sakit, 10));
+    const dataTanpaKeterangan = presenceData.map((item) => parseInt(item.alpha, 10));
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
 
     chartInstance.current = new Chart(myChartRef, {
-      type: 'line',
+      type: "line",
       data: {
         labels: labels,
-        datasets: [
+        datasets:
+        [
           {
             label: 'Tepat Waktu',
             data: dataTepat,
@@ -61,7 +62,7 @@ const LineChart = ({ presenceData }) => {
             borderWidth: 1
           },
           {
-            label: 'Tanpa Keterangan',
+            label: 'Alpha',
             data: dataTanpaKeterangan,
             fill: true,
             backgroundColor: 'rgba(153, 102, 255, 0.2)',
@@ -75,20 +76,22 @@ const LineChart = ({ presenceData }) => {
         maintainAspectRatio: false,
         scales: {
           y: {
-            beginAtZero: true
+            beginAtZero: true,
           },
           x: {
             ticks: {
               maxRotation: isMobile ? 1 : 0,
               minRotation: isMobile ? 1 : 0,
-              callback: function(value) {
-                const label = this.getLabelForValue(value);
-                return isMobile && label.length > 3 ? label.substring(0, 3) + '...' : label;
-              }
-            }
-          }
-        }
-      }
+              callback: function (value) {
+                const label = labels[value];
+                return isMobile && label.length > 3
+                  ? label.substring(0, 3) + "..."
+                  : label;
+              },
+            },
+          },
+        },
+      },
     });
 
     return () => {
