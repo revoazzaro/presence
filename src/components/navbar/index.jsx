@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import Sidebar from "../sidebar";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Navbar = ({ isMenuOpen, setIsMenuOpen }) => {
   const [isdropdownOpen, setIsdropdownOpen] = useState(false);
@@ -48,6 +48,14 @@ const Navbar = ({ isMenuOpen, setIsMenuOpen }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const location = useLocation();
+
+  const loginPath = location.pathname === "/login";
+
+ if (loginPath) {
+   return null;
+ }
 
   return (
     <>
