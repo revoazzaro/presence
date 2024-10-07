@@ -14,6 +14,10 @@ export default {
         poppinsRegular : ['poppinsRegular', 'sans-serif'],
       }
     },
+    backgroundSize: {
+      "88px": '88px',
+      "160px": '160px',
+    }
   },
   plugins: [],
 }

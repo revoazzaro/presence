@@ -125,7 +125,8 @@ const Login = () => {
   return (
     <>
       <section>
-        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-[88vh] lg:py-0 font-poppinsSemiBold">
+      <div className="bg-[url('/src/assets/images/logoesemka1.png')] md:bg-88px bg-160px bg-no-repeat md:bg-repeat md:bg-left-top bg-top">
+        <div className="flex flex-col items-center justify-center md:px-6 md:py-8 px-0 py-0 mx-auto h-[88vh] lg:py-0 font-poppinsSemiBold">
           <div className="w-full bg-[#fefefe] rounded-lg md:mt-0 sm:max-w-md xl:p-0 shadow-xl">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl text-black font-bold leading-tight tracking-tight md:text-2xl">
@@ -155,7 +156,7 @@ const Login = () => {
                 <div>
                   <label
                     htmlFor="password"
-                    className="block mb-2 text-sm font-medium text-black text-md"
+                    className="block mb-2 text-md font-medium text-black text-md"
                   >
                     Password
                   </label>
@@ -178,7 +179,7 @@ const Login = () => {
                 )}
                 <button
                   type="submit"
-                  className="w-full text-white bg-black hover:bg-gray-100 hover:text-black hover:border-[1px] hover:border-[#000000] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-3 text-center"
+                  className="w-full text-white bg-[#393186] hover:bg-gray-100 hover:text-black hover:border-[1px] hover:border-[#000000] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-3 text-center"
                 >
                   Login
                 </button>
@@ -186,6 +187,7 @@ const Login = () => {
             </div>
           </div>
         </div>
+      </div>
       </section>
     </>
   );
