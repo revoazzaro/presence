@@ -30,15 +30,15 @@ const Sidebar = ({ isOpen, closeMenu }) => {
         } top-[53px] w-screen md:w-1/6 h-full bg-black`}
       >
         <div className="px-4">
-          <p className="text-white font-semibold text-2xl">Absensi</p>
+          <p className="text-white font-poppinsMedium text-2xl">Absensi</p>
           <ul className="gap-8 flex flex-col pt-8">
-            <li className="text-[#595c5f] font-medium hover:cursor-pointer hover:text-white text-lg transition-all">
+            <li className="text-[#595c5f] font-poppinsRegular hover:cursor-pointer hover:text-white text-xl transition-all">
               <Link to={"/"} onClick={handleNavigate} >Dashboard</Link>
             </li>
             <a onClick={toggleMenuAbsen} className="text-[#595c5f] font-medium">
               {isSubMenuAbsen}
               <div className="flex flex-col">
-                <div className="flex flex-row justify-between hover:cursor-pointer group/dropdown hover:text-white transition-all">
+                <div className="flex flex-row justify-between hover:cursor-pointer group/dropdown hover:text-white transition-all font-poppinsRegular text-xl">
                   <p className="text-lg">Absensi</p>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -54,19 +54,19 @@ const Sidebar = ({ isOpen, closeMenu }) => {
                 {isSubMenuAbsen && (
                   <ul className="pt-2 pl-2 gap-2 flex flex-col text-md">
                     <li
-                      className="hover:cursor-pointer hover:text-white transition-all"
+                      className="hover:cursor-pointer hover:text-white transition-all font-poppinsRegular "
                       onClick={() => handleNavigate("/daftarhadir")}
                     >
                       Daftar hadir
                     </li>
                     <li
-                      className="hover:cursor-pointer hover:text-white transition-all"
+                      className="hover:cursor-pointer hover:text-white transition-all font-poppinsRegular"
                       onClick={() => handleNavigate("/download")}
                     >
                       Download
                     </li>
                     <li
-                      className="hover:cursor-pointer hover:text-white transition-all"
+                      className="hover:cursor-pointer hover:text-white transition-all font-poppinsRegular"
                       onClick={() => handleNavigate("/jadwal")}
                     >
                       Jadwal
@@ -75,31 +75,31 @@ const Sidebar = ({ isOpen, closeMenu }) => {
                 )}
               </div>
             </a>
-            {token === "admin" || token === "guru" ? <a className="text-[#595c5f] font-medium hover:cursor-pointer hover:text-white text-lg transition-all" onClick={() => handleNavigate("/daftarguru")}>
+            {token === "admin" || token === "guru" ? <a className="text-[#595c5f] font-poppinsRegular hover:cursor-pointer hover:text-white text-xl transition-all" onClick={() => handleNavigate("/daftarguru")}>
               Daftar Guru
             </a> : null}
             <a onClick={toggleMenuSiswa} className="text-[#595c5f] font-medium">
               {isSubMenuSiswa}
               <div className="flex flex-col">
                 <div className="flex flex-row justify-between hover:cursor-pointer group/dropdown hover:text-white transition-all">
-                  <p className="text-lg">Siswa</p>
+                  <p className="text-xl font-poppinsRegular">Siswa</p>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     height="24px"
                     viewBox="0 -960 960 960"
                     width="24px"
                     fill="#595c5f"
-                    className={`${isSubMenuAbsen ? "transform rotate-180 transition-all": ""} group-hover/dropdown:fill-white `}
+                    className={`${isSubMenuSiswa ? "transform rotate-180 transition-all": ""} group-hover/dropdown:fill-white `}
                   >
                     <path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z" />
                   </svg>
                 </div>
                 {isSubMenuSiswa && (
                   <ul className="pt-2 pl-2 gap-2 flex flex-col text-md">
-                    <li className="hover:cursor-pointer hover:text-white transition-all" onClick={() => handleNavigate("/daftarsiswa")}>
+                    <li className="hover:cursor-pointer hover:text-white transition-all font-poppinsRegular" onClick={() => handleNavigate("/daftarsiswa")}>
                       Daftar Siswa
                     </li>
-                    <li className="hover:cursor-pointer hover:text-white transition-all" onClick={() => handleNavigate("/daftarwalimurid")}>
+                    <li className="hover:cursor-pointer hover:text-white transition-all font-poppinsRegular" onClick={() => handleNavigate("/daftarwalimurid")}>
                       Daftar Wali Murid
                     </li>
                   </ul>

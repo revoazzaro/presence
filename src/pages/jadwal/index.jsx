@@ -41,9 +41,9 @@ const Absensi = () => {
 
   return (
     <>
-      <div className=" bg-[#fefefe] mt-12 shadow-xl rounded-md border-[#000] border-[1px] transition-all min-h-full">
+      <div className=" bg-[#fefefe] mt-12 shadow-xl rounded-md border-[#000] border-[1px] transition-all min-h-full font-poppinsRegular">
           <div className="container mx-auto p-8 text-black">
-          <h1 className="text-center text-3xl font-bold mb-4">Pilih Bulan</h1>
+          <h1 className="text-center text-3xl font-poppinsSemiBold mb-4">Pilih Bulan</h1>
           <div className="flex justify-center mb-4">
             <select
               value={selectedMonth}

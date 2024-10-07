@@ -74,7 +74,7 @@ const DaftarWaliMurid = () => {
 
   return (
     <>
-      <div className="flex flex-col mt-12">
+      <div className="flex flex-col mt-12 font-poppinsRegular">
         <div className="-m-1.5 overflow-x-auto">
           <div className="p-1.5 min-w-full inline-block align-middle">
             <div className="border rounded-lg divide-y divide-gray-200">

@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 
 const ProfileItem = ({ label, value }) => {
   return (
-    <li className="py-3 sm:py-4">
+    <li className="py-3 sm:py-4 font-poppinsRegular">
       <div className="flex items-center">
-        <div className="flex-1 min-w-0 ms-4">
-          <p className="text-sm font-medium text-gray-900 truncate ">
+        <div className="flex-1 min-w-0">
+          <p className="text-md font-medium text-gray-900">
             {label} :
           </p>
         </div>
@@ -73,7 +73,7 @@ const Profile = () => {
 
   return (
     <>
-      <div className="w-full mx-auto h-76 max-w-md mt-12 p-4 bg-[#fefefe] border border-gray-200 rounded-lg shadow sm:p-8">
+      <div className="w-full mx-auto h-76 max-w-md mt-12 p-4 bg-[#fefefe] border border-gray-200 rounded-lg shadow sm:p-8 font-poppinsSemiBold">
         <div className="flex items-center justify-between mb-4">
           <p className="text-2xl font-bold leading-none text-gray-900">
             Profile

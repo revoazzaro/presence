@@ -61,11 +61,11 @@ const Dashboard = ({ isOpen }) => {
     <>
       <div className={`${isOpen ? "ml-52" : ""}`}>
         <div className="text-black pt-12 bottom-0">
-          <div className="text-3xl font-semibold">Dashboard</div>
-          <div className="flex flex-wrap w-full gap-x-3 gap-y-4 mt-8">
+          <div className="text-3xl font-poppinsSemiBold">Dashboard</div>
+          <div className="flex flex-wrap w-full gap-x-3 gap-y-4 mt-6">
             <div className="md:w-[49%] w-full bg-[#ffffff] md:h-28 h-20 shadow-lg border-[1px] rounded-lg items-center flex justify-between">
               <div className="justify-between w-full">
-                <div className="items-center justify-between px-4 flex">
+                <div className="items-center justify-between px-4 flex font-poppinsMedium">
                   <div className="text-lg">
                     <p>Siswa Terdaftar</p>
                     <p className="font-semibold">
@@ -86,7 +86,7 @@ const Dashboard = ({ isOpen }) => {
             </div>
             <div className="md:w-[49%] w-full bg-[#ffffff] md:h-28 h-20 shadow-lg border-[1px] rounded-lg items-center flex justify-between">
               <div className="justify-between w-full">
-                <div className="items-center justify-between px-4 flex">
+                <div className="items-center justify-between px-4 flex font-poppinsMedium">
                   <div className="text-lg">
                     <p>Siswa Hadir</p>
                     <p className="font-semibold">

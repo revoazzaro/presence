@@ -139,12 +139,12 @@ const DaftarSiswa = () => {
 
   return (
     <>
-      <div className="flex flex-col mt-12">
+      <div className="flex flex-col mt-12 font-poppinsRegular">
         <div className="-m-1.5 overflow-x-auto">
           <div className="p-1.5 min-w-full inline-block align-middle">
             <div className="border rounded-lg divide-y divide-gray-200">
               <div className="py-3 px-4">
-                <div className="relative max-w-xs">
+                <div className="relative max-w-[350px]">
                   <label htmlFor="hs-table-search" className="sr-only">
                     Search
                   </label>
@@ -152,7 +152,7 @@ const DaftarSiswa = () => {
                     type="search"
                     name="hs-table-search"
                     id="hs-table-search"
-                    className="py-2 px-3 ps-9 block w-full border-gray-200 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none bg-white border text-black"
+                    className="py-2 px-3 ps-9 block w-full border-gray-200 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none bg-white border text-black font-poppinsRegular"
                     placeholder="Cari berdasarkan NIS, Nama, dan Kelas"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}

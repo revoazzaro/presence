@@ -125,7 +125,7 @@ const Login = () => {
   return (
     <>
       <section>
-        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-[88vh] lg:py-0">
+        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-[88vh] lg:py-0 font-poppinsSemiBold">
           <div className="w-full bg-[#fefefe] rounded-lg md:mt-0 sm:max-w-md xl:p-0 shadow-xl">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl text-black font-bold leading-tight tracking-tight md:text-2xl">
@@ -180,7 +180,7 @@ const Login = () => {
                   type="submit"
                   className="w-full text-white bg-black hover:bg-gray-100 hover:text-black hover:border-[1px] hover:border-[#000000] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-3 text-center"
                 >
-                  Sign in
+                  Login
                 </button>
               </form>
             </div>

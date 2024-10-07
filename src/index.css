@@ -16,3 +16,27 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+@font-face {
+  src: url('./assets/fonts/Poppins-Regular.ttf');
+  font-family: 'poppinsRegular';
+}
+
+@font-face {
+  src: url('./assets/fonts/Poppins-Bold.ttf');
+  font-family: 'poppinsBold';
+}
+
+@font-face {
+  src: url('./assets/fonts/Poppins-SemiBold.ttf');
+  font-family: 'poppinsSemiBold';
+}
+
+@font-face {
+  src: url('./assets/fonts/Poppins-Medium.ttf');
+  font-family: 'poppinsMedium';
+}
+@font-face {
+  src: url('./assets/fonts/Poppins-Regular.ttf');
+  font-family: 'poppinsRegular';
+}

@@ -45,9 +45,9 @@ const Download = () => {
 
   return (
     <>
-      <div className="bg-[#fefefe] mt-12 shadow-xl rounded-lg border-[#c1c1c1] border-[1px] transition-all min-h-full">
+      <div className="bg-[#fefefe] mt-12 shadow-xl rounded-lg border-[#c1c1c1] border-[1px] transition-all min-h-full font-poppinsRegular">
         <div className="container mx-auto p-8 text-black">
-          <h1 className="text-center text-3xl font-bold mb-4">
+          <h1 className="text-center text-3xl font-poppinsSemiBold mb-4">
             Pilih Tahun dan Bulan
           </h1>
           <div className="flex justify-center mb-4 gap-4">

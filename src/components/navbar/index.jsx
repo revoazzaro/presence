@@ -118,7 +118,7 @@ const Navbar = ({ isMenuOpen, setIsMenuOpen }) => {
             >
               <ul>
                 <li
-                  className="dropdown-item text-black"
+                  className="dropdown-item text-black font-poppinsMedium"
                   onClick={() => {
                     navigate("/profile");
                     setIsdropdownOpen(false);
@@ -126,7 +126,8 @@ const Navbar = ({ isMenuOpen, setIsMenuOpen }) => {
                 >
                   Profile
                 </li>
-                <li className="dropdown-item text-black" onClick={logout}>
+                <li className="dropdown-item text-black font-poppinsMedium" 
+                  onClick={logout}>
                   Log Out
                 </li>
               </ul>

@@ -32,7 +32,7 @@ const LineChart = ({ presenceData }) => {
             backgroundColor: 'rgba(75, 192, 192, 0.2)',
             borderColor: 'rgb(75, 192, 192)',
             tension: 0.3,
-            borderWidth: 1
+            borderWidth: 1,
           },
           {
             label: 'Telat',
@@ -91,6 +91,15 @@ const LineChart = ({ presenceData }) => {
             },
           },
         },
+        plugins: {
+          legend: {
+            labels: {
+              font: {
+                family: "poppinsRegular",
+              }
+            }
+          }
+        }
       },
     });
 

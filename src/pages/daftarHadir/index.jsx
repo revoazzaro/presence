@@ -68,7 +68,7 @@ const DaftarHadir = () => {
                     type="text"
                     name="hs-table-search"
                     id="hs-table-search"
-                    className="py-2 px-3 ps-9 block w-full border-gray-200 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none bg-white border text-black"
+                    className="py-2 px-3 ps-9 block w-full border-gray-200 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none bg-white border text-black font-poppinsRegular"
                     placeholder="Search for items"
                   />
                   <div className="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3">
@@ -91,7 +91,7 @@ const DaftarHadir = () => {
                 </div>
               </div>
               <div className="relative">
-                <table className="text-left w-full divide-y divide-gray-200 table-fixed">
+                <table className="text-left w-full divide-y divide-gray-200 table-fixed font-poppinsRegular">
                   <thead className="bg-gray-50 justify-between ml-10">
                     <tr>
                       <th
